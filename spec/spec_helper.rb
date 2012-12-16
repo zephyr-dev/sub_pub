@@ -24,7 +24,7 @@ RSpec.configure do |config|
   #
   #  Rails loads this during its setup
   #
-  SubPub::ActiveRecordExtensions.run_initializers
+  SubPub::Railtie.run_initializers
 
   #
   # Test database
@@ -44,7 +44,9 @@ RSpec.configure do |config|
   #
   # Ensure pubsub is enabled
   #
-  config.before do
+  config.before(:each) do
     SubPub.enable
+    SubPub.scope = 'sub_pub'
+    SubPub.unsubscribe_all
   end
 end
